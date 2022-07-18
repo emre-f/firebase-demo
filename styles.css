@@ -135,6 +135,11 @@
     text-transform: uppercase;
     white-space: nowrap;
   }
+
+  .Character_name-container.mainPlayer {
+    color: red;
+  }
+
   .Character_coins {
     margin-left: 1px;
     color: gold;
