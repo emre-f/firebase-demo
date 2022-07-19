@@ -83,7 +83,7 @@
   .Character.you {
     z-index: 1;
   }
-  .Character.you .Character_you-arrow {
+  /* .Character.you .Character_you-arrow {
     display: block;
   }
   .Character_you-arrow {
@@ -94,7 +94,7 @@
     width: 7px;
     height: 5px;
     background: url(images/arrow.png) no-repeat no-repeat;
-  }
+  } */
   .Character_sprite {
     overflow: hidden;
     top: -3px;
@@ -136,9 +136,40 @@
     white-space: nowrap;
   }
 
-  .Character_name-container.mainPlayer {
-    color: red;
+  .Character_effects-container {
+    position: absolute;
+    top: -20px;
+    left: -5px;
+    font-size: 5px;
+    padding: 1px 2px 1px;
+    border-radius: 3px;
+    background: rgba(1, 1, 1, 0);
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
+
+  .Character[you="true"] .Character_name-container {
+    color: rgb(72, 255, 0);
+  }
+
+  /* .Character_name-main-player-container {
+    position: absolute;
+    padding: 1px 2px 1px;
+    border-radius: 3px;
+    width: auto;
+    height: 0.5px;
+    background: gold;
+  }
+
+  .Character[main-player="true"] .Character_name-main-player-container {
+    opacity: 1;
+  }
+
+  .Character[main-player="false"] .Character_name-main-player-container {
+    opacity: 0;
+  } */
 
   .Character_coins {
     margin-left: 1px;

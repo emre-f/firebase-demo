@@ -199,7 +199,7 @@ function getRandomSafeSpot(playersArray) {
 			}
 			playerRef.set(players[playerId]);
 			attemptGrabCoin(newX, newY);
-			moveTimer = 0.5; // Can move once every 0.5seconds
+			moveTimer = 0.4; // Can move once every 0.5seconds
 		}
 	}
 
@@ -251,7 +251,7 @@ function getRandomSafeSpot(playersArray) {
 				})
 			}
 
-			Object.keys(players).forEach((key) => {
+			Object.keys(players).forEach((key) => { // For each player...
 				const characterState = players[key];
 				let el = playerElements[key];
 				// Now update the DOM
@@ -262,31 +262,46 @@ function getRandomSafeSpot(playersArray) {
 				const left = 16 * characterState.x + "px";
 				const top = 16 * characterState.y - 4 + "px";
 				el.style.transform = `translate3d(${left}, ${top}, 0)`;
+
+				if (characterState.mainPlayer) {
+					el.setAttribute("main-player", true);
+				} else {
+					el.setAttribute("main-player", false);
+				}
+
+				let effectsContainer = "";
+
+				if(characterState.mainPlayer) {
+					effectsContainer = effectsContainer + `<span class="Character_name-main-player-container">&#128187;</span>`;
+				}
+
+				el.querySelector(".Character_effects-container").innerHTML = effectsContainer;
 			})
 		})
 
 		allPlayersRef.on("child_added", (snapshot) => {
 			//Fires whenever a new node is added the tree
 			const addedPlayer = snapshot.val();
+			console.log(addedPlayer);
 			const characterElement = document.createElement("div");
 			characterElement.classList.add("Character", "grid-cell");
 			if (addedPlayer.id === playerId) {
-				characterElement.classList.add("you");
-			}
-
-			if (addedPlayer.mainPlayer) {
-				characterElement.classList.add("mainPlayer");
+				characterElement.setAttribute("you", true);
+			} else {
+				characterElement.setAttribute("you", false);
 			}
 
 			characterElement.innerHTML = (`
-          <div class="Character_shadow grid-cell"></div>
-          <div class="Character_sprite grid-cell"></div>
-          <div class="Character_name-container">
-            <span class="Character_name"></span>
-            <span class="Character_coins">0</span>
-          </div>
-          <div class="Character_you-arrow"></div>
-        `);
+				<div class="Character_shadow grid-cell"></div>
+				<div class="Character_sprite grid-cell"></div>
+				<div class="Character_effects-container">
+				</div>
+				<div class="Character_name-container">
+					<span class="Character_name"></span>
+					<span class="Character_coins">0</span>
+				</div>
+			`);
+
 			playerElements[addedPlayer.id] = characterElement;
 
 			//Fill in some initial state
